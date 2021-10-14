@@ -42,11 +42,11 @@ class _SignUpState extends State<SignUp> {
                     })),
             ElevatedButton(
               child: const Text("Sign Up"),
-              onPressed: () async => {_authService.signIn(email, password)},
+              onPressed: () async => {_authService.signUp(email, password)},
             ),
             ElevatedButton(
               child: const Text("Sign In"),
-              onPressed: () async => {_authService.signUp(email, password)},
+              onPressed: () async => {_authService.signIn(email, password)},
             ),
           ],
         )),
