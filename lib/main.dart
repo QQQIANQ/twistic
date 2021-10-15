@@ -13,7 +13,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -27,16 +26,20 @@ class MyApp extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-
           return StreamProvider<UserModel?>.value(
             value: AuthService().user,
-            child: MaterialApp(home: Wrapper(),),
+            child: const MaterialApp(
+              home: Wrapper(),
+            ),
             initialData: null,
           );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return const Text("Loading",textDirection: TextDirection.ltr,);
+        return const Text(
+          "Loading",
+          textDirection: TextDirection.ltr,
+        );
       },
     );
   }

@@ -4,6 +4,7 @@ import 'package:twistic/models/user.dart';
 import 'package:twistic/screens/auth/signup.dart';
 import 'package:twistic/screens/main/home.dart';
 import 'package:twistic/screens/main/posts/add.dart';
+import 'package:twistic/screens/main/profile/edit.dart';
 import 'package:twistic/screens/main/profile/profile.dart';
 
 class Wrapper extends StatelessWidget {
@@ -24,6 +25,7 @@ class Wrapper extends StatelessWidget {
         '/': (context) => Home(),
         '/add': (context) => Add(),
         '/profile': (context) => Profile(),
+        '/edit' : (context) => Edit(),
       }
     );
   }
