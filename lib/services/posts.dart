@@ -4,9 +4,10 @@ import 'package:twistic/models/postmodel.dart';
 
 class PostService {
 
-  List<PostModel> _postListFromSnapshot(QuerySnapshot snapshot) {
 
-    return snapshot.docs.map((doc) {
+  List<PostModel> _postListFromSnapshot(QuerySnapshot? snapshot) {
+
+    return snapshot!.docs.map((doc) {
       return PostModel(
         id: doc.id,
         text: (doc.data() as dynamic)['text'] ?? '',
@@ -17,6 +18,7 @@ class PostService {
 
   }
 
+
   Future savePost(text) async {
     await FirebaseFirestore.instance.collection("posts").add({
       'text': text,
@@ -26,7 +28,11 @@ class PostService {
   }
 
   Stream<List<PostModel>> getPostsByUser(uid) {
-    return FirebaseFirestore.instance.collection("posts").where('creator', isEqualTo: uid).snapshots().map(_postListFromSnapshot);
+    return FirebaseFirestore
+        .instance.collection("posts")
+        .where('creator', isEqualTo: uid)
+        .snapshots()
+        .map(_postListFromSnapshot);
   }
 
 

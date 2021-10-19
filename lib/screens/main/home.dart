@@ -27,24 +27,28 @@ class Home extends StatelessWidget {
             ),
             ListTile(
               title: Text('Profile'),
-              onTap: ()  {
+              onTap: () {
                 Navigator.pushNamed(context, '/profile');
               },
             ),
             ListTile(
               title: Text('Edit'),
-              onTap: ()  {
+              onTap: () {
                 Navigator.pushNamed(context, '/edit');
               },
             ),
             ListTile(
-              title: Text('Log out'),
-              onTap: () async {
-                _authService.signOut();
-              }
-            ),
+                title: Text('Log out'),
+                onTap: () async {
+                  _authService.signOut();
+                }),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
+        ],
       ),
     );
   }

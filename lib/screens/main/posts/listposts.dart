@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:twistic/models/postmodel.dart';
 
 class ListPosts extends StatefulWidget {
-  const ListPosts({Key? key}) : super(key: key);
-
+  ListPosts({Key? key}) : super(key: key);
 
   @override
   _ListPostsState createState() => _ListPostsState();
@@ -13,16 +12,16 @@ class ListPosts extends StatefulWidget {
 class _ListPostsState extends State<ListPosts> {
   @override
   Widget build(BuildContext context) {
-
-    final posts = Provider.of<List<PostModel>?>(context) ;
+    final posts = Provider.of<List<PostModel>>(context);
 
     return ListView.builder(
-      itemCount: posts?.length ?? 0,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: posts.length,
       itemBuilder: (context, index) {
-        final post = posts?[index];
+        final post = posts[index];
         return ListTile(
-          title: Text(post?.creator ?? ""),
-          subtitle: Text(post?.text ?? ""),
+          title: Text(post.creator ?? ''),
+          subtitle: Text(post.text ?? ''),
         );
       },
     );

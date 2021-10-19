@@ -12,7 +12,6 @@ class Edit extends StatefulWidget {
 }
 
 class _EditState extends State<Edit> {
-
   final UserService _userService = UserService();
 
   File? _profileImage;
@@ -35,37 +34,49 @@ class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         actions: [
-      TextButton(
-      style: TextButton.styleFrom(
-      primary: Colors.white,
-      ), onPressed: () async {
-        await _userService.updateProfile(_bannerImage!, _profileImage!, name);
-              Navigator.pop(context);
-      },
-      child: Text('Save'))
-    ],
-    ),
-
-    body: Container(
-    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-    child: Form(
-    child: Column(
-    children: [
-    TextButton(onPressed: () => getImage(0),
-    child: _profileImage == null ? const Icon(Icons.person) : Image.file(_profileImage!, height: 100,)),
-    TextButton(onPressed: () => getImage(1),
-    child: _bannerImage == null ? const Icon(Icons.person) : Image.file(_bannerImage!, height: 100,)),
-    TextFormField(
-    onChanged: (val) =>
-    setState(() {name = val;}),
-    )
-    ],
-    ),
-    ),
-    ),
+          TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+              ),
+              onPressed: () async {
+                await _userService.updateProfile(_bannerImage!, _profileImage!, name);
+                Navigator.pop(context);
+              },
+              child: const Text('Save'))
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+        child: Form(
+          child: Column(
+            children: [
+              TextButton(
+                  onPressed: () => getImage(0),
+                  child: _profileImage == null
+                      ? const Icon(Icons.person)
+                      : Image.file(
+                          _profileImage!,
+                          height: 100,
+                        )),
+              TextButton(
+                  onPressed: () => getImage(1),
+                  child: _bannerImage == null
+                      ? const Icon(Icons.person)
+                      : Image.file(
+                          _bannerImage!,
+                          height: 100,
+                        )),
+              TextFormField(
+                onChanged: (val) => setState(() {
+                  name = val;
+                }),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
