@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:twistic/models/user.dart';
 import 'package:twistic/services/utils.dart';
 
@@ -19,12 +20,40 @@ class UserService {
         email: snapshot['email'],
     );
     } else {
-      return null;
+      return null ;
     }
   }
+  List<UserModel> _userListFromSnapshot(QuerySnapshot? snapshot) {
+
+    return snapshot!.docs.map((doc) {
+      return UserModel(
+        id: doc.id,
+        name: (doc.data() as dynamic)['name'] ?? '',
+        profileImageUrl: (doc.data() as dynamic)['profileImageUrl'] ?? '',
+        bannerImageUrl: (doc.data() as dynamic)['bannerImageUrl'] ?? '',
+        email: (doc.data() as dynamic)['email'] ?? '',
+      );
+    }).toList();
+
+  }
+
+
+
+
 
   Stream<UserModel?> getUserInfo(uid) {
     return FirebaseFirestore.instance.collection("users").doc(uid).snapshots().map(_userFromFirebaseSnapshot);
+  }
+
+  Stream<List<UserModel>?> queryByName(search) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .orderBy("name")
+        .startAt([search])
+        .endAt([search + '\uf8ff'])
+        .limit(10)
+        .snapshots()
+        .map(_userListFromSnapshot);
   }
 
   Future<void> updateProfile(File _bannerImage, File _profileImage, String name) async {

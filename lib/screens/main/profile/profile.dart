@@ -20,14 +20,15 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final  String uid =  ModalRoute.of(context)!.settings.arguments.toString();
     return MultiProvider(
         providers: [
           StreamProvider<List<PostModel>>.value(
-            value: _postService.getPostsByUser(FirebaseAuth.instance.currentUser!.uid),
+            value: _postService.getPostsByUser(uid),
             initialData: [],
           ),
-          StreamProvider.value(
-            value: _userService.getUserInfo(FirebaseAuth.instance.currentUser!.uid),
+          StreamProvider<UserModel?>.value(
+            value: _userService.getUserInfo(uid),
             initialData: null,
           )
         ],
@@ -53,12 +54,14 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                       child: Column(
                         children: [
-                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Image.network(
-                              Provider.of<UserModel>(context).profileImageUrl ?? '',
-                              height: 60,
-                              fit: BoxFit.cover,
-                            ),
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children :[
+                              Provider.of<UserModel>(context).profileImageUrl != '' ?
+                              CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: NetworkImage(Provider.of<UserModel>(context).profileImageUrl ?? '')
+                              ): Icon(Icons.person,size: 40),
+                              SizedBox(width: 10,),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/edit');
